@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+  grid-area: auto;
+}
+.grid-item3 {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  grid-area: auto;
+  /* grid-area: footer; */
+}
+.grid-item1 {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  grid-area: auto;
+  /* grid-area: header; */
+}
+.grid-item2 {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  height: 100vh;
+  overflow: hidden;
+  width: 20vw;
+  overflow-y: scroll;
+  overflow-x: auto;
+ padding: 20px;
+ grid-area: auto;
+}
+</style>
+<style>
+
+table.dataframe, .dataframe th, .dataframe td {
+  border: none;
+  border-bottom: 1px solid #000000;
+  border-collapse: collapse;
+  text-align:left;
+  padding: 10px;
+  margin-bottom: 40px;
+  font-size: 0.9em;
+}
+
+.male th {
+    background-color: red;
+    color: black;
+}
+
+.female th {
+    background-color: yellow;
+    color: goldenrod    ;
+}
+
+tr:nth-child(odd)		{ background-color: blueviolet; }
+tr:nth-child(even)	{ background-color: seashell; }
+
+tr:hover            { background-color: yellow;}
+</style>
+</head>
+<body>
+
+
+<div class="grid-container">
+
+
+  <div class="grid-item1">
+    <center>
+        <h6>{{ title }}</h6>
+      </center>
+      <center>
+        <canvas id="myChart" width=document.body.clientWidth height=document.body.clientHeight></canvas>
+        <script>
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var chart = new Chart(ctx, {
+              // The type of chart we want to create
+              type: 'line',
+      
+              // The data for our dataset
+              data: {
+                labels : [
+              {% for item in D %}
+               "{{ item }}",
+              {% endfor %}
+        ],
+                  
+                  datasets: [{
+                      label: "GPU",
+                      fill: false,
+                      // backgroundColor: 'rgb(99, 99, 132)',
+                      borderColor: 'rgb(111,111, 111)',
+                      data: [
+                {% for item in A %}
+                   "{{ item }}",
+                  {% endfor %}
+            ],
+                  },
+                  {
+                      label: "CPU",
+                      fill: false,
+                      // backgroundColor: 'rgb(99, 99, 132)',
+                      borderColor: 'rgb(255,0,0)',
+                      data: [
+                {% for item in B %}
+                   "{{ item }}",
+                  {% endfor %}
+                  
+            ],
+                  },
+                  {
+                      label: "MEMORY",
+                      fill: false,
+                      // backgroundColor: 'rgb(99, 99, 132)',
+                      borderColor: 'rgb(255,255,0)',
+                      data: [
+                {% for item in C %}
+                   "{{ item }}",
+                  {% endfor %}
+                  
+            ],
+                  }
+            //       },
+            //       {
+            //           label: "DDD",
+            //           fill: false,
+            //           // backgroundColor: 'rgb(99, 99, 132)',
+            //           borderColor: 'rgb(33,33,33)',
+            //           data: [
+            //     {% for item in D %}
+            //        "{{ item }}",
+            //       {% endfor %}
+                  
+            // ],
+            //       }
+                  ]
+              },
+      
+              // Configuration options go here
+              options: {
+                scales: {
+                yAxes : [{
+                    ticks : {
+                        max : 100,    
+                        min : 0
+                    }
+                }]
+            }
+
+              }
+          });
+          </script>
+      </center>
+  </div>
+  <!-- <div class="grid-item3">3</div>   
+  <div class="grid-item3">3</div>  
+    <div class="grid-item3">3</div>  
+     <div class="grid-item3">3</div>   -->
+
+</div>
+
+</body>
+</html>
